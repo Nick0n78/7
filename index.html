@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+    </style>
+    <title>Форма реєстрації</title>
+</head>
+<body>
+    <form id="registrationForm">
+        <label for="firstName">Ім’я:</label>
+        <input type="text" id="firstName" name="firstName" required minlength="2">
+        <br>
+        <label for="lastName">Прізвище:</label>
+        <input type="text" id="lastName" name="lastName" required minlength="2">
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <br>
+        <label for="phone">Телефон:</label>
+        <input type="tel" id="phone" name="phone" required pattern="\+38\d{10}">
+        <br>
+        <label for="description">Короткий опис:</label>
+        <textarea id="description" name="description" required minlength="10"></textarea>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required minlength="8" maxlength="16" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}">
+        <br>
+        <button type="submit">Зареєструватися</button>
+    </form>
+    <script>
+      document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const description = document.getElementById('description').value;
+    const password = document.getElementById('password').value;
+
+    const user = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        description: description,
+        password: password
+    };
+
+    console.log(user);
+    alert('Реєстрація успішна!');
+
+    const blob = new Blob([JSON.stringify(user, null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'user_data.json';
+    link.click();
+});
+
+    </script>
+</body>
+</html>
